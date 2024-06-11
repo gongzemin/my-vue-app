@@ -1,0 +1,118 @@
+<head>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.js"></script>
+  <script src="../Build/CesiumUnminified/Cesium.js"></script>
+  <style>
+    @import url(../Build/CesiumUnminified/Widgets/widgets.css);
+
+    html,
+    body,
+    #cesiumContainer {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="cesiumContainer"></div>
+  <script>
+    Cesium.Ion.defaultAccessToken = 'Cesium的Token'
+
+    // 创建Cesium Viewer对象
+    var viewer = new Cesium.Viewer('cesiumContainer', {
+      // 是否显示信息窗口
+      infoBox: false,
+      // 设置地形
+      terrainProvider: Cesium.createWorldTerrain({
+        requestVertexNormals: true,
+        requestWaterMask: true,
+      }),
+    })
+
+    // 使用jQuery加载Geojson数据
+    $.get('https://geo.datav.aliyun.com/areas_v3/bound/610100_full.json').then(
+      data => {
+        let holeArr = []
+        let features = data.features
+        let LineInstanceArr = []
+
+        // 遍历边界
+        features.forEach(feature => {
+          feature.geometry.coordinates.forEach(coorList => {
+            holeArr.push({
+              positions: Cesium.Cartesian3.fromDegreesArray(
+                coorList.flat(Infinity)
+              ),
+            })
+
+            // 使用的贴地线，开启地形不会产生影响
+            let polyline = new Cesium.GroundPolylineGeometry({
+              positions: Cesium.Cartesian3.fromDegreesArray(
+                coorList.flat(Infinity)
+              ),
+              width: 3,
+            })
+            let lineInstance = new Cesium.GeometryInstance({
+              geometry: polyline,
+            })
+            LineInstanceArr.push(lineInstance)
+          })
+        })
+
+        let line = new Cesium.GroundPolylinePrimitive({
+          geometryInstances: LineInstanceArr,
+          //折线外观
+          appearance: new Cesium.PolylineMaterialAppearance({
+            material: Cesium.Material.fromType('Color', {
+              color: Cesium.Color.YELLOW,
+            }),
+          }),
+        })
+        viewer.scene.primitives.add(line)
+
+        // 遮罩
+        let polygonEntity = new Cesium.Entity({
+          polygon: {
+            hierarchy: {
+              // 添加外部区域为1/4半圆，设置为180会报错
+              positions: Cesium.Cartesian3.fromDegreesArray([
+                0, 0, 0, 90, 179, 90, 179, 0,
+              ]),
+              // 中心挖空的“洞”
+              holes: holeArr,
+            },
+            material: new Cesium.Color(15 / 255.0, 38 / 255.0, 84 / 255.0, 0.7),
+          },
+        })
+
+        viewer.entities.add(polygonEntity)
+
+        let layers = viewer.scene.imageryLayers
+        // 天地图影像图层
+        var blackMarble1 = layers.addImageryProvider(
+          new Cesium.UrlTemplateImageryProvider({
+            url: 'http://t0.tianditu.gov.cn/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=天地图Token',
+          })
+        )
+        // 添加天地图的国境线图层
+        var blackMarble = layers.addImageryProvider(
+          new Cesium.UrlTemplateImageryProvider({
+            url: 'http://t0.tianditu.gov.cn/DataServer?T=ibo_w&x={x}&y={y}&l={z}&tk=天地图Token',
+          })
+        )
+
+        // 具体定位到哪里看自己情况
+        viewer.camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(
+            108.941579,
+            34.157097,
+            150000.0
+          ),
+        })
+      }
+    )
+  </script>
+</body>
