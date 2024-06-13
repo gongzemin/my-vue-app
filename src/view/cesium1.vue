@@ -105,20 +105,20 @@ onMounted(() => {
     // }),
   })
   // 在基础地图上添加地图
-    var imaglyser = new Cesium.ImageryLayer(
-      new Cesium.UrlTemplateImageryProvider({
-        url: 'https://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', // 纯地标图(地名)
-        minimumLevel: 1,
-        maximumLevel: 18,
-      })
-    )
-    map.imageryLayers.add(imaglyser)
+  var imaglyser = new Cesium.ImageryLayer(
+    new Cesium.UrlTemplateImageryProvider({
+      url: 'https://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', // 纯地标图(地名)
+      minimumLevel: 1,
+      maximumLevel: 18,
+    }),
+  )
+  map.imageryLayers.add(imaglyser)
   map.camera.flyTo({
     // 地图定位到指定位置
     destination: Cesium.Cartesian3.fromDegrees(
       116.48653672087,
       23.690416508705,
-      10000
+      10000,
     ), // 相机位置 不是地图位置
     // 相机的姿态
     orientation: {

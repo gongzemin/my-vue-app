@@ -5,7 +5,6 @@
  * @FilePath: /my-vue-app/src/components/Render.tsx
  */
 export default {
-    props: ["render"],
-    render: (props: any) => props.render,
-  }
-  
+  props: ['render'],
+  render: (props: any) => props.render,
+}

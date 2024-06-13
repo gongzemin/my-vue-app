@@ -55,9 +55,15 @@ export default defineComponent({
   font-size: 14px;
   font-weight: bold;
   color: #fff;
-  background: rgba(38,70,117,0.9);
-border-radius: 16px;
-border: 8px solid;
-border-image: linear-gradient(225deg, rgba(31, 206, 255, 1), rgba(75, 149, 255, 0), rgba(83, 219, 255, 1)) 8 8;
+  background: rgba(38, 70, 117, 0.9);
+  border-radius: 16px;
+  border: 8px solid;
+  border-image: linear-gradient(
+      225deg,
+      rgba(31, 206, 255, 1),
+      rgba(75, 149, 255, 0),
+      rgba(83, 219, 255, 1)
+    )
+    8 8;
 }
 </style>

@@ -44,14 +44,14 @@
           feature.geometry.coordinates.forEach(coorList => {
             holeArr.push({
               positions: Cesium.Cartesian3.fromDegreesArray(
-                coorList.flat(Infinity)
+                coorList.flat(Infinity),
               ),
             })
 
             // 使用的贴地线，开启地形不会产生影响
             let polyline = new Cesium.GroundPolylineGeometry({
               positions: Cesium.Cartesian3.fromDegreesArray(
-                coorList.flat(Infinity)
+                coorList.flat(Infinity),
               ),
               width: 3,
             })
@@ -95,13 +95,13 @@
         var blackMarble1 = layers.addImageryProvider(
           new Cesium.UrlTemplateImageryProvider({
             url: 'http://t0.tianditu.gov.cn/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=天地图Token',
-          })
+          }),
         )
         // 添加天地图的国境线图层
         var blackMarble = layers.addImageryProvider(
           new Cesium.UrlTemplateImageryProvider({
             url: 'http://t0.tianditu.gov.cn/DataServer?T=ibo_w&x={x}&y={y}&l={z}&tk=天地图Token',
-          })
+          }),
         )
 
         // 具体定位到哪里看自己情况
@@ -109,10 +109,10 @@
           destination: Cesium.Cartesian3.fromDegrees(
             108.941579,
             34.157097,
-            150000.0
+            150000.0,
           ),
         })
-      }
+      },
     )
   </script>
 </body>

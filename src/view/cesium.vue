@@ -35,7 +35,7 @@ function loadGaode() {
       url: 'https://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', // 纯地标图(地名)
       minimumLevel: 1,
       maximumLevel: 18,
-    })
+    }),
   )
   viewer.imageryLayers.add(gaodeLayer)
 }
@@ -132,7 +132,7 @@ function addMapTotal(array) {
     array.forEach(item => {
       let positionValue = Cesium.Cartesian3.fromDegrees(
         item.coordinates[0],
-        item.coordinates[1]
+        item.coordinates[1],
       )
       let position = viewer.scene.cartesianToCanvasCoordinates(positionValue)
       if (position) {
@@ -167,7 +167,7 @@ function addMapTotal(array) {
       array.forEach((item, itemIndex) => {
         let positionValue = Cesium.Cartesian3.fromDegrees(
           item.coordinates[0],
-          item.coordinates[1]
+          item.coordinates[1],
         )
         let position = viewer.scene.cartesianToCanvasCoordinates(positionValue)
         // let position = viewer.scene.cartesianToCanvasCoordinates(positionValue);
@@ -276,7 +276,7 @@ function addBorder(url) {
         let mark = viewer.entities.add({
           position: Cesium.Cartesian3.fromDegrees(
             feature.geometry.center.x,
-            feature.geometry.center.y
+            feature.geometry.center.y,
           ),
           polyline: {
             width: 5,
@@ -399,14 +399,14 @@ function addMask() {
           console.log('coorList---333333', coorList.flat(Infinity))
           holeArr.push({
             positions: Cesium.Cartesian3.fromDegreesArray(
-              coorList.flat(Infinity)
+              coorList.flat(Infinity),
             ),
           })
 
           // 使用的贴地线，开启地形不会产生影响
           let polyline = new Cesium.GroundPolylineGeometry({
             positions: Cesium.Cartesian3.fromDegreesArray(
-              coorList.flat(Infinity)
+              coorList.flat(Infinity),
             ),
             width: 2,
           })

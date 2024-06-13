@@ -7,7 +7,12 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "test:unit": "vitest --environment jsdom"
+    "test:unit": "vitest --environment jsdom",
+    "format": "prettier --write --cache .",
+    "format-check": "prettier --check --cache ."
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,css,scss,md}": "prettier --write"
   },
   "dependencies": {
     "@antv/g6": "^4.8.24",
@@ -27,6 +32,8 @@
     "@vitejs/plugin-vue": "^5.0.3",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
     "cesium": "^1.118.2",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.6",
     "naive-ui": "^2.36.0",
     "postcss-px-to-viewport-8-plugin": "^1.2.5",
     "prettier": "^3.3.2",

@@ -35,7 +35,7 @@ class WallDiffuseMaterialProperty {
       this._color,
       time,
       Cesium.Color.RED,
-      result.color
+      result.color,
     )
     return result
   }
@@ -81,5 +81,5 @@ Cesium.Material._materialCache.addMaterial(
     translucent: function (material) {
       return true
     },
-  }
+  },
 )
